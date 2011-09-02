@@ -161,6 +161,13 @@ The time-out in seconds when trying to obtain a lock. Defaults to
 
 Steffen Mueller, C<smueller@cpan.org>
 
+=head1 ACKNOWLEDGMENT
+
+This module was originally developed for booking.com.
+With approval from booking.com, this module was generalized
+and put on CPAN, for which the author would like to express
+his gratitude.
+
 =head1 COPYRIGHT AND LICENSE
 
  (C) 2011 Steffen Mueller. All rights reserved.
