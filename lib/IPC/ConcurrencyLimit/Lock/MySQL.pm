@@ -7,7 +7,7 @@ our $VERSION = '0.01';
 
 use Carp qw(croak);
 use Class::XSAccessor {
-  accessors => [qw(dbh id)],
+  accessors => [qw(dbh id timeout)],
   getters => [qw(make_new_dbh_callback lock_name)],
 };
 
@@ -29,11 +29,11 @@ sub new {
   defined $lock_name
     or croak("Need a 'lock_name' parameter for the lock");
 
-  my $h = {};
   my $self = bless {
     lock_name => $lock_name,
     max_procs => $max_procs,
     make_new_dbh_callback => $dbh_callback,
+    timeout => $opt->{timeout}||0,
     dbh => undef,
     id => undef,
   } => $class;
@@ -62,7 +62,7 @@ sub _get_lock {
 
   my $dbh = $self->_get_dbh;
   my $lock_name_base = $self->lock_name;
-  my $timeout = 0;
+  my $timeout = $self->timeout;
   for my $worker (1 .. $self->{max_procs}) {
     my $lock_name = $lock_name_base . "_" . $worker;
     my $query = "SELECT GET_LOCK(?, ?)";
@@ -120,7 +120,7 @@ locking across multiple hosts.
 Given a hash ref with options, attempts to obtain a lock in
 the pool. On success, returns the lock object, otherwise undef.
 
-Required options:
+Required parameters:
 
 =over 2
 
@@ -143,6 +143,17 @@ be silently released!
 
 The maximum no. of locks (and thus usually processes)
 to allow at one time.
+
+=back
+
+Options:
+
+=over 2
+
+=item C<timeout>
+
+The time-out in seconds when trying to obtain a lock. Defaults to
+0, non-blocking.
 
 =back
 
