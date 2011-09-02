@@ -1,0 +1,11 @@
+mysql.dat
+IPC-ConcurrencyLimit-Lock-MySQL-.*\.tar\.gz
+Makefile
+Makefile.old
+Makefile.bak
+.git
+\..*\.swp
+\..*\.swo
+blib/
+pm_to_blib
+
