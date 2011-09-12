@@ -5,6 +5,7 @@ use IPC::ConcurrencyLimit;
 use IPC::ConcurrencyLimit::Lock::MySQL;
 use DBI;
 use DBD::mysql;
+require Test::More;
 
 $| = 1;
 
@@ -13,17 +14,15 @@ my $conf_file = 'mysql.dat';
 if (-e $conf_file) {
   # eval connection parameters into existance
   my $ok = do $conf_file;
-  defined $ok or diag("Error loading $conf_file. Maybe you chose to skip DB-related tests: ", $@||$!);
+  defined $ok or Test::More::diag("Error loading $conf_file. Maybe you chose to skip DB-related tests: ", $@||$!);
 }
 
-unless (defined $db) {
+if (not defined $db) {
   my $reason = 'no mysql connection details available';
-  eval 'use Test::More skip_all => $reason; 1;'
-    or die $@;
+  Test::More->import(skip_all => $reason);
 }
 else {
-  eval 'use Test::More tests => 43;'
-    or die $@;
+  Test::More->import(tests => 43);
 }
 
 my %args = (
