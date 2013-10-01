@@ -3,7 +3,7 @@ use 5.008001;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Carp qw(croak);
 use Class::XSAccessor {
@@ -170,7 +170,7 @@ his gratitude.
 
 =head1 COPYRIGHT AND LICENSE
 
- (C) 2011 Steffen Mueller. All rights reserved.
+ (C) 2011, 2013 Steffen Mueller. All rights reserved.
  
  This code is available under the same license as Perl version
  5.8.1 or higher.
